@@ -4,9 +4,9 @@ from typing import Optional, List
 class GameOut(BaseModel):
     appid: int
     name: str
-    developer: str
+    developer: Optional[str]=None
     publisher: str
-    score_rank:float
+    score_rank:Optional[str]=None
     positive: int
     negative: int
     userscore: float
