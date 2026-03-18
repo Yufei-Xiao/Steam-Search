@@ -22,6 +22,28 @@ def on_startup():
 
 
 @app.get("/get/games", response_model=schemas.GameSearchResults)
-def api_search_games(q: Optional[str] = "", limit: int = 20, offset: int = 0, min_price : int = 0, max_price : int = 999999, session: Session = Depends(db.get_db)):
-    results, total =crud.search_games(session,q or "", min_price, max_price, limit=limit, offset=offset)
+def api_search_games(
+    q: Optional[str] = "",
+    limit: int = 20,
+    offset: int = 0,
+    min_price: int = 0,
+    max_price: int = 999999,
+    developer: Optional[str] = None,
+    publisher: Optional[str] = None,
+    playtime_min: Optional[int] = None,
+    playtime_max: Optional[int] = None,
+    session: Session = Depends(db.get_db)
+):
+    results, total = crud.search_games(
+        session,
+        q or "",
+        min_price,
+        max_price,
+        developer,
+        publisher,
+        playtime_min,
+        playtime_max,
+        limit=limit,
+        offset=offset
+    )
     return {"results": results, "total": total}
